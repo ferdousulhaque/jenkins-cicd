@@ -1,0 +1,18 @@
+version: "3"
+services:
+  jenkins:
+    container_name: JENKINS_CICD
+    ports:
+      - "8080:8080"
+    build:
+      context: .
+    env_file:
+      - "./.env"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "3"
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    working_dir: /app
