@@ -3,11 +3,14 @@ services:
   jenkins:
     container_name: JENKINS_CICD
     ports:
-      - "8080:8080"
+      - ${JENKINS_PORT}:8080
+      - ${JENKINS_AGENT_PORT}:50000
     build:
       context: .
     env_file:
       - "./.env"
+    volumes:
+      - ./jenkins_home:/var/jenkins_home
     logging:
       driver: "json-file"
       options:
@@ -15,4 +18,3 @@ services:
         max-file: "3"
     extra_hosts:
       - "host.docker.internal:172.17.0.1"
-    working_dir: /app
